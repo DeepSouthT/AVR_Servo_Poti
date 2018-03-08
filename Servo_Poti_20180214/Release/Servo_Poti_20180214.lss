@@ -1,0 +1,89 @@
+
+Servo_Poti_20180214.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000060  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000000b4  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000000b4  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000000e4  2**2
+                  CONTENTS, READONLY
+  4 .debug_info   000002b8  00000000  00000000  00000120  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 00000294  00000000  00000000  000003d8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   000000ca  00000000  00000000  0000066c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    000000f6  00000000  00000000  00000736  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	09 c0       	rjmp	.+18     	; 0x14 <__ctors_end>
+   2:	0e c0       	rjmp	.+28     	; 0x20 <__bad_interrupt>
+   4:	0d c0       	rjmp	.+26     	; 0x20 <__bad_interrupt>
+   6:	0c c0       	rjmp	.+24     	; 0x20 <__bad_interrupt>
+   8:	0b c0       	rjmp	.+22     	; 0x20 <__bad_interrupt>
+   a:	0a c0       	rjmp	.+20     	; 0x20 <__bad_interrupt>
+   c:	09 c0       	rjmp	.+18     	; 0x20 <__bad_interrupt>
+   e:	08 c0       	rjmp	.+16     	; 0x20 <__bad_interrupt>
+  10:	07 c0       	rjmp	.+14     	; 0x20 <__bad_interrupt>
+  12:	06 c0       	rjmp	.+12     	; 0x20 <__bad_interrupt>
+
+00000014 <__ctors_end>:
+  14:	11 24       	eor	r1, r1
+  16:	1f be       	out	0x3f, r1	; 63
+  18:	cf e9       	ldi	r28, 0x9F	; 159
+  1a:	cd bf       	out	0x3d, r28	; 61
+  1c:	14 d0       	rcall	.+40     	; 0x46 <main>
+  1e:	1e c0       	rjmp	.+60     	; 0x5c <_exit>
+
+00000020 <__bad_interrupt>:
+  20:	ef cf       	rjmp	.-34     	; 0x0 <__vectors>
+
+00000022 <setup_adc>:
+  22:	38 9a       	sbi	0x07, 0	; 7
+  24:	3d 9a       	sbi	0x07, 5	; 7
+  26:	86 b1       	in	r24, 0x06	; 6
+  28:	83 68       	ori	r24, 0x83	; 131
+  2a:	86 b9       	out	0x06, r24	; 6
+  2c:	08 95       	ret
+
+0000002e <read_adc>:
+  2e:	36 9a       	sbi	0x06, 6	; 6
+  30:	36 99       	sbic	0x06, 6	; 6
+  32:	fe cf       	rjmp	.-4      	; 0x30 <read_adc+0x2>
+  34:	85 b1       	in	r24, 0x05	; 5
+  36:	08 95       	ret
+
+00000038 <setup_pwm>:
+  38:	83 b7       	in	r24, 0x33	; 51
+  3a:	85 60       	ori	r24, 0x05	; 5
+  3c:	83 bf       	out	0x33, r24	; 51
+  3e:	8f b5       	in	r24, 0x2f	; 47
+  40:	83 6b       	ori	r24, 0xB3	; 179
+  42:	8f bd       	out	0x2f, r24	; 47
+  44:	08 95       	ret
+
+00000046 <main>:
+  46:	b9 9a       	sbi	0x17, 1	; 23
+  48:	ec df       	rcall	.-40     	; 0x22 <setup_adc>
+  4a:	f6 df       	rcall	.-20     	; 0x38 <setup_pwm>
+  4c:	f0 df       	rcall	.-32     	; 0x2e <read_adc>
+  4e:	90 e0       	ldi	r25, 0x00	; 0
+  50:	95 95       	asr	r25
+  52:	87 95       	ror	r24
+  54:	95 95       	asr	r25
+  56:	87 95       	ror	r24
+  58:	89 bd       	out	0x29, r24	; 41
+  5a:	f8 cf       	rjmp	.-16     	; 0x4c <main+0x6>
+
+0000005c <_exit>:
+  5c:	f8 94       	cli
+
+0000005e <__stop_program>:
+  5e:	ff cf       	rjmp	.-2      	; 0x5e <__stop_program>
