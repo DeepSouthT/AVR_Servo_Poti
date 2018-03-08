@@ -3,87 +3,134 @@ Servo_Poti_20180214.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000060  00000000  00000000  00000054  2**1
+  0 .text         000000aa  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000000  00800060  00800060  000000b4  2**0
+  1 .data         00000000  00800060  00800060  0000011e  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .comment      00000030  00000000  00000000  000000b4  2**0
+  2 .bss          00000001  00800060  00800060  0000011e  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  0000011e  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000000e4  2**2
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000150  2**2
                   CONTENTS, READONLY
-  4 .debug_info   000002b8  00000000  00000000  00000120  2**0
+  5 .debug_info   000002b8  00000000  00000000  0000018c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_abbrev 00000294  00000000  00000000  000003d8  2**0
+  6 .debug_abbrev 00000294  00000000  00000000  00000444  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_line   000000ca  00000000  00000000  0000066c  2**0
+  7 .debug_line   000000ca  00000000  00000000  000006d8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_str    000000f6  00000000  00000000  00000736  2**0
+  8 .debug_str    000000f6  00000000  00000000  000007a2  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
    0:	09 c0       	rjmp	.+18     	; 0x14 <__ctors_end>
-   2:	0e c0       	rjmp	.+28     	; 0x20 <__bad_interrupt>
-   4:	0d c0       	rjmp	.+26     	; 0x20 <__bad_interrupt>
-   6:	0c c0       	rjmp	.+24     	; 0x20 <__bad_interrupt>
-   8:	0b c0       	rjmp	.+22     	; 0x20 <__bad_interrupt>
-   a:	0a c0       	rjmp	.+20     	; 0x20 <__bad_interrupt>
-   c:	09 c0       	rjmp	.+18     	; 0x20 <__bad_interrupt>
-   e:	08 c0       	rjmp	.+16     	; 0x20 <__bad_interrupt>
-  10:	07 c0       	rjmp	.+14     	; 0x20 <__bad_interrupt>
-  12:	06 c0       	rjmp	.+12     	; 0x20 <__bad_interrupt>
+   2:	16 c0       	rjmp	.+44     	; 0x30 <__bad_interrupt>
+   4:	15 c0       	rjmp	.+42     	; 0x30 <__bad_interrupt>
+   6:	14 c0       	rjmp	.+40     	; 0x30 <__bad_interrupt>
+   8:	13 c0       	rjmp	.+38     	; 0x30 <__bad_interrupt>
+   a:	12 c0       	rjmp	.+36     	; 0x30 <__bad_interrupt>
+   c:	11 c0       	rjmp	.+34     	; 0x30 <__bad_interrupt>
+   e:	10 c0       	rjmp	.+32     	; 0x30 <__bad_interrupt>
+  10:	0f c0       	rjmp	.+30     	; 0x30 <__bad_interrupt>
+  12:	0e c0       	rjmp	.+28     	; 0x30 <__bad_interrupt>
 
 00000014 <__ctors_end>:
   14:	11 24       	eor	r1, r1
   16:	1f be       	out	0x3f, r1	; 63
   18:	cf e9       	ldi	r28, 0x9F	; 159
   1a:	cd bf       	out	0x3d, r28	; 61
-  1c:	14 d0       	rcall	.+40     	; 0x46 <main>
-  1e:	1e c0       	rjmp	.+60     	; 0x5c <_exit>
 
-00000020 <__bad_interrupt>:
-  20:	ef cf       	rjmp	.-34     	; 0x0 <__vectors>
+0000001c <__do_clear_bss>:
+  1c:	20 e0       	ldi	r18, 0x00	; 0
+  1e:	a0 e6       	ldi	r26, 0x60	; 96
+  20:	b0 e0       	ldi	r27, 0x00	; 0
+  22:	01 c0       	rjmp	.+2      	; 0x26 <.do_clear_bss_start>
 
-00000022 <setup_adc>:
-  22:	38 9a       	sbi	0x07, 0	; 7
-  24:	3d 9a       	sbi	0x07, 5	; 7
-  26:	86 b1       	in	r24, 0x06	; 6
-  28:	83 68       	ori	r24, 0x83	; 131
-  2a:	86 b9       	out	0x06, r24	; 6
-  2c:	08 95       	ret
+00000024 <.do_clear_bss_loop>:
+  24:	1d 92       	st	X+, r1
 
-0000002e <read_adc>:
-  2e:	36 9a       	sbi	0x06, 6	; 6
-  30:	36 99       	sbic	0x06, 6	; 6
-  32:	fe cf       	rjmp	.-4      	; 0x30 <read_adc+0x2>
-  34:	85 b1       	in	r24, 0x05	; 5
-  36:	08 95       	ret
+00000026 <.do_clear_bss_start>:
+  26:	a1 36       	cpi	r26, 0x61	; 97
+  28:	b2 07       	cpc	r27, r18
+  2a:	e1 f7       	brne	.-8      	; 0x24 <.do_clear_bss_loop>
+  2c:	24 d0       	rcall	.+72     	; 0x76 <main>
+  2e:	3b c0       	rjmp	.+118    	; 0xa6 <_exit>
 
-00000038 <setup_pwm>:
-  38:	83 b7       	in	r24, 0x33	; 51
-  3a:	85 60       	ori	r24, 0x05	; 5
-  3c:	83 bf       	out	0x33, r24	; 51
-  3e:	8f b5       	in	r24, 0x2f	; 47
-  40:	83 6b       	ori	r24, 0xB3	; 179
-  42:	8f bd       	out	0x2f, r24	; 47
-  44:	08 95       	ret
+00000030 <__bad_interrupt>:
+  30:	e7 cf       	rjmp	.-50     	; 0x0 <__vectors>
 
-00000046 <main>:
-  46:	b9 9a       	sbi	0x17, 1	; 23
-  48:	ec df       	rcall	.-40     	; 0x22 <setup_adc>
-  4a:	f6 df       	rcall	.-20     	; 0x38 <setup_pwm>
-  4c:	f0 df       	rcall	.-32     	; 0x2e <read_adc>
+00000032 <setup_adc>:
+  32:	38 9a       	sbi	0x07, 0	; 7
+  34:	3d 9a       	sbi	0x07, 5	; 7
+  36:	86 b1       	in	r24, 0x06	; 6
+  38:	83 68       	ori	r24, 0x83	; 131
+  3a:	86 b9       	out	0x06, r24	; 6
+  3c:	08 95       	ret
+
+0000003e <read_adc>:
+  3e:	36 9a       	sbi	0x06, 6	; 6
+  40:	36 99       	sbic	0x06, 6	; 6
+  42:	fe cf       	rjmp	.-4      	; 0x40 <__SREG__+0x1>
+  44:	85 b1       	in	r24, 0x05	; 5
+  46:	08 95       	ret
+
+00000048 <filter_adc_reading>:
+  48:	28 2f       	mov	r18, r24
+  4a:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
   4e:	90 e0       	ldi	r25, 0x00	; 0
-  50:	95 95       	asr	r25
-  52:	87 95       	ror	r24
-  54:	95 95       	asr	r25
-  56:	87 95       	ror	r24
-  58:	89 bd       	out	0x29, r24	; 41
-  5a:	f8 cf       	rjmp	.-16     	; 0x4c <main+0x6>
+  50:	63 e0       	ldi	r22, 0x03	; 3
+  52:	70 e0       	ldi	r23, 0x00	; 0
+  54:	17 d0       	rcall	.+46     	; 0x84 <__mulhi3>
+  56:	82 0f       	add	r24, r18
+  58:	91 1d       	adc	r25, r1
+  5a:	95 95       	asr	r25
+  5c:	87 95       	ror	r24
+  5e:	95 95       	asr	r25
+  60:	87 95       	ror	r24
+  62:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <_edata>
+  66:	08 95       	ret
 
-0000005c <_exit>:
-  5c:	f8 94       	cli
+00000068 <setup_pwm>:
+  68:	83 b7       	in	r24, 0x33	; 51
+  6a:	85 60       	ori	r24, 0x05	; 5
+  6c:	83 bf       	out	0x33, r24	; 51
+  6e:	8f b5       	in	r24, 0x2f	; 47
+  70:	83 6b       	ori	r24, 0xB3	; 179
+  72:	8f bd       	out	0x2f, r24	; 47
+  74:	08 95       	ret
 
-0000005e <__stop_program>:
-  5e:	ff cf       	rjmp	.-2      	; 0x5e <__stop_program>
+00000076 <main>:
+  76:	b9 9a       	sbi	0x17, 1	; 23
+  78:	dc df       	rcall	.-72     	; 0x32 <setup_adc>
+  7a:	f6 df       	rcall	.-20     	; 0x68 <setup_pwm>
+  7c:	e0 df       	rcall	.-64     	; 0x3e <read_adc>
+  7e:	e4 df       	rcall	.-56     	; 0x48 <filter_adc_reading>
+  80:	89 bd       	out	0x29, r24	; 41
+  82:	fc cf       	rjmp	.-8      	; 0x7c <main+0x6>
+
+00000084 <__mulhi3>:
+  84:	00 24       	eor	r0, r0
+  86:	55 27       	eor	r21, r21
+  88:	04 c0       	rjmp	.+8      	; 0x92 <__mulhi3+0xe>
+  8a:	08 0e       	add	r0, r24
+  8c:	59 1f       	adc	r21, r25
+  8e:	88 0f       	add	r24, r24
+  90:	99 1f       	adc	r25, r25
+  92:	00 97       	sbiw	r24, 0x00	; 0
+  94:	29 f0       	breq	.+10     	; 0xa0 <__stack+0x1>
+  96:	76 95       	lsr	r23
+  98:	67 95       	ror	r22
+  9a:	b8 f3       	brcs	.-18     	; 0x8a <__mulhi3+0x6>
+  9c:	71 05       	cpc	r23, r1
+  9e:	b9 f7       	brne	.-18     	; 0x8e <__mulhi3+0xa>
+  a0:	80 2d       	mov	r24, r0
+  a2:	95 2f       	mov	r25, r21
+  a4:	08 95       	ret
+
+000000a6 <_exit>:
+  a6:	f8 94       	cli
+
+000000a8 <__stop_program>:
+  a8:	ff cf       	rjmp	.-2      	; 0xa8 <__stop_program>

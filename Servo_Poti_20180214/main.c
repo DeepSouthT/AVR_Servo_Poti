@@ -24,6 +24,8 @@
 #define F_CPU 9600000
 #define SERVO PB1
 
+uint8_t adc_filter_output =0;
+
 void setup_adc (void)
 {
 	// Set the ADC input to PB2/ADC1
@@ -55,7 +57,6 @@ uint8_t read_adc (void)
 uint8_t filter_adc_reading(uint8_t input)
 {	
 	// Note that the first value is zero !!
-	uint8_t adc_filter_output =0;
 	adc_filter_output =(((adc_filter_output*3)+input)/4);
 	
 	return adc_filter_output;
