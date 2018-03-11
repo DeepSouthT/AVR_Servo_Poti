@@ -15,7 +15,9 @@
  *     Find the complete rotation angle of the servo.
  *     36Hz PWM wave is used for the servo.
  *     Potentiometer is used to change the width of the PWM wave.
- *******************************/ 
+ *
+ * Last modified: 11.03.2018
+ *******************************/
 
 #include <avr/io.h>
 #include <stdbool.h>
@@ -23,8 +25,6 @@
 
 #define F_CPU 9600000
 #define SERVO PB1
-
-uint8_t adc_filter_output =0;
 
 void setup_adc (void)
 {
@@ -57,6 +57,8 @@ uint8_t read_adc (void)
 uint8_t filter_adc_reading(uint8_t input)
 {	
 	// Note that the first value is zero !!
+	static uint8_t adc_filter_output =0;
+	
 	adc_filter_output =(((adc_filter_output*3)+input)/4);
 	
 	return adc_filter_output;

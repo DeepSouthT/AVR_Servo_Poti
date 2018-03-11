@@ -316,9 +316,8 @@ END GROUP
                 0x00800060                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.adc_filter_output
+ .bss.adc_filter_output.1640
                 0x00800060        0x1 main.o
-                0x00800060                adc_filter_output
  *(COMMON)
                 0x00800061                PROVIDE (__bss_end, .)
                 0x000000aa                __data_load_start = LOADADDR (.data)
